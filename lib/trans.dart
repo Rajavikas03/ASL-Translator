@@ -83,33 +83,7 @@ class _transsState extends State<transs> {
                       hintText: "Enter text",
                     ),
                     onChanged: (text) async {
-                      try {
-                        final translation = await text.translate(
-                          from: 'en',
-                          to: 'ar',
-                        );
-                        setState(() {
-                          translated = translation.text;
-                        });
-                      } catch (error, stackTrace) {
-                        handleError(error, stackTrace);
-                      }
-
-                      //
-                      // if (value != null) {
-                      //   final translation = await value.translate(
-                      //     from: 'en',
-                      //     to: 'ar',
-                      //   );
-                      //   setState(() {
-                      //     translated = translation.text;
-                      //   });
-                      // } else {
-                      //   // setState(() {
-                      //   //   const trans = "Translation";
-                      //   //   translated = trans;
-                      //   // });
-                      // }
+                      try_block(text);
                     },
                   ),
                   const Divider(
@@ -159,5 +133,19 @@ class _transsState extends State<transs> {
       const trans = "Translation";
       translated = trans;
     });
+  }
+
+  Future<void> try_block(String text) async {
+    try {
+      final translation = await text.translate(
+        from: 'en',
+        to: 'ar',
+      );
+      setState(() {
+        translated = translation.text;
+      });
+    } catch (error, stackTrace) {
+      handleError(error, stackTrace);
+    }
   }
 }
