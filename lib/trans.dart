@@ -9,6 +9,7 @@ class transs extends StatefulWidget {
   State<transs> createState() => _transsState();
 }
 
+// ignore: camel_case_types
 class _transsState extends State<transs> {
   String translated = 'Translation';
   @override
@@ -16,12 +17,12 @@ class _transsState extends State<transs> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        leading: Icon(
+        leading: const Icon(
           Icons.translate,
           color: Colors.lightBlueAccent,
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Translation',
           style: TextStyle(color: Colors.white),
         ),
@@ -36,11 +37,11 @@ class _transsState extends State<transs> {
             height: MediaQuery.sizeOf(context).height * 0.4,
             child: Card(
               color: Colors.black,
-              margin: EdgeInsets.all(12),
+              margin: const EdgeInsets.all(12),
               child: ListView(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 children: [
-                  Text(
+                  const Text(
                     'English US: ',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -49,7 +50,7 @@ class _transsState extends State<transs> {
                   ),
                   TextField(
                     cursorColor: Colors.lightBlueAccent,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
