@@ -14,6 +14,8 @@ class _transsState extends State<transs> {
   String translated = 'Translation';
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
@@ -30,11 +32,11 @@ class _transsState extends State<transs> {
       ),
       body: Column(
         children: [
+          SizedBox(height: height * 0.04
+              // .height * 0.04,
+              ),
           SizedBox(
-            height: MediaQuery.sizeOf(context).height * 0.04,
-          ),
-          SizedBox(
-            height: MediaQuery.sizeOf(context).height * 0.4,
+            height: height * 0.4,
             child: Card(
               color: Colors.black,
               margin: const EdgeInsets.all(12),
@@ -87,12 +89,13 @@ class _transsState extends State<transs> {
                       try_block(text);
                     },
                   ),
-                  const Divider(
-                    height: 32,
+                  Divider(
+                    thickness: width * 0.0009,
+                    height: height * 0.06,
                     color: Colors.white,
                   ),
                   SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.03,
+                    height: height * 0.03,
                   ),
                   RichText(
                     text: const TextSpan(
@@ -106,7 +109,7 @@ class _transsState extends State<transs> {
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.01,
+                    height: height * 0.01,
                   ),
                   Text(
                     translated,
