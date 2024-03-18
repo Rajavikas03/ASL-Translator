@@ -12,6 +12,10 @@ dependencies:
 
   translator: ^0.1.7
 
+assets:
+  - assets/
+  # - image/
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

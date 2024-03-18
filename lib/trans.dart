@@ -123,6 +123,11 @@ class _transsState extends State<transs> {
               ),
             ),
           ),
+          Container(
+            color: Colors.green,
+            width: width * 0.9,
+            height: height * 0.3,
+          )
         ],
       ),
     );
