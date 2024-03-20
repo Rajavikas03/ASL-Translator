@@ -10,11 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  translator: ^0.1.7
+  translator: ^1.0.0
+  gap: ^3.0.1
 
-assets:
-  - assets/
-  # - image/
+
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +22,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+
+# assets:
+#   - assets/
+#   # - assets/a 1.png
+# flutter:
+  assets:
+    - assets/
+
