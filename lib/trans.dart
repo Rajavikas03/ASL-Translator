@@ -232,9 +232,11 @@ class _transsState extends State<transs> {
 
     for (String character in characters) {
       alphabetNumber = getAlphabetNumber(character);
-      // alphabetNumbers.add(alphabetNumber);
+
       print("$alphabetNumber");
     }
+    alphabetNumbers.add(alphabetNumber);
+    print(" list: $alphabetNumbers");
 
     // print("hiiii$alphabetNumber");
   }
