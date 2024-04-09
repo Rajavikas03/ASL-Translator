@@ -1,11 +1,26 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:translator/translator.dart';
 
+class Gif {
+  final String GifName;
+  final String GifImg;
+
+  Gif({
+    required this.GifName,
+    required this.GifImg,
+  });
+}
+
 // import 'package:translator/translator.dart';
 List<int> alphabetNumbers = [];
+List<Gif> gif = [
+  Gif(GifName: "baby", GifImg: "gif/baby.gif"),
+  Gif(GifName: "change", GifImg: "gif/change.gif"),
+  Gif(GifName: "clean", GifImg: "gif/clean.gif"),
+  Gif(GifName: "dirty", GifImg: "gif/dirty.gif"),
+  Gif(GifName: "food", GifImg: "gif/food.gif")
+];
 
 class transs extends StatefulWidget {
   const transs({super.key});
@@ -17,24 +32,20 @@ class transs extends StatefulWidget {
 // ignore: camel_case_types
 class _transsState extends State<transs> {
   String translated = 'Translation';
+  TextEditingController textcontroller = TextEditingController();
   late int alphabetNumber;
+
   @override
   void initState() {
     super.initState();
-
     alphabetNumbers.clear();
-    // Initialize the list
-    // alphabetNumbers = List<int>.generate(26, (i) => i + 1);
   }
 
-  // @override
-  // void dispose() {
-  //   // Dispose of the list
-  //   alphabetNumbers.clear();
-
-  //   // Call the superclass dispose method
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    alphabetNumbers.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +88,7 @@ class _transsState extends State<transs> {
                       height: MediaQuery.sizeOf(context).height * 0.01,
                     ),
                     TextField(
+                      controller: textcontroller,
                       cursorColor: Colors.lightBlueAccent,
                       style: const TextStyle(
                           fontSize: 36,
@@ -111,10 +123,6 @@ class _transsState extends State<transs> {
                                 const BorderSide(color: Colors.transparent)),
                         hintText: "Enter text",
                       ),
-                      onChanged: (text) async {
-                        try_block(text);
-                        sign_block(text);
-                      },
                     ),
                     Divider(
                       thickness: width * 0.0009,
@@ -150,12 +158,30 @@ class _transsState extends State<transs> {
                 ),
               ),
             ),
-            Gap(10),
+            const Gap(20),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlueAccent,
+                ),
+                onPressed: () {
+                  translateText(textcontroller.text);
+                  sign_block(textcontroller.text);
+                },
+                child: const Padding(
+                  padding: EdgeInsets.only(
+                      top: 20.0, bottom: 20.0, left: 10, right: 10),
+                  child: Text(
+                    "Generate",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w600),
+                  ),
+                )),
+            const Gap(20),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  for (int i = 1; i <= 26; i++) ...[
+                  for (int i = 0; i < alphabetNumbers.length; i++) ...[
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
@@ -163,25 +189,26 @@ class _transsState extends State<transs> {
                         width: width * 0.8,
                         height: height * 0.5,
                         child: Image.asset(
-                          "assets/$i.png",
+                          "assets/${alphabetNumbers[i]}.png",
                           fit: BoxFit.fill,
                         ),
                       ),
                     ),
-                    // Gap(10),
                   ],
                 ],
               ),
             ),
+            Gap(40),
+            Container(
+              height: height * 0.4,
+              width: width * 0.8,
+              child: Image.asset(gif[4].GifImg),
+            )
           ],
         ),
       ),
     );
   }
-  // ignore: non_constant_identifier_names
-  // Future<dynamic> build_row(){
-
-  // }
 
 // Error handler for null vale passed in textfield  #######
   void handleError(dynamic error, StackTrace stackTrace) {
@@ -194,55 +221,42 @@ class _transsState extends State<transs> {
     });
   }
 
-  Future<void> try_block(String text) async {
-    try {
-      // (text)
-      // print("hiiii${text.length}");
-      // List<String> characters = text.split('');
-      // List<int> alphabetNumbers = [];
-
-      // for (String character in characters) {
-      //   int alphabetNumber = getAlphabetNumber(character);
-      //   alphabetNumbers.add(alphabetNumber);
-      // }
-
-      // print("hiiii$alphabetNumbers");
-      // print(characters);
-      // print(characters.length);
-      // switch (val) {
-      //   case "":
-      //     break;
-      //   default:
-      // }
-      final translation = await text.translate(
-        from: 'auto',
-        to: 'ar',
-      );
-      setState(() {
-        translated = translation.text;
-      });
-    } catch (error, stackTrace) {
-      handleError(error, stackTrace);
+  Future<void> translateText(String text) async {
+    if (text.isNotEmpty) {
+      try {
+        final translation = await text.translate(
+          from: 'auto',
+          to: 'ar',
+        );
+        setState(() {
+          translated = translation.text;
+        });
+      } catch (error, stackTrace) {
+        handleError(error, stackTrace);
+      }
+    } else {
+      translated = "Translation";
     }
   }
 
-  sign_block(text) async {
-    print("hiiii${text.length}");
-    List<String> characters = text.split('');
-
-    for (String character in characters) {
-      alphabetNumber = getAlphabetNumber(character);
-
-      print("$alphabetNumber");
+  sign_block(String text) async {
+    if (text.isNotEmpty) {
+      try {
+        alphabetNumbers.clear();
+        final List<String> characters = text.toLowerCase().characters.toList();
+        for (String character in characters) {
+          alphabetNumber = getAlphabetNumber(character);
+          alphabetNumbers.add(alphabetNumber);
+        }
+      } catch (error, stackTrace) {
+        handleError(error, stackTrace);
+      }
+    } else {
+      alphabetNumbers.clear();
     }
-    alphabetNumbers.add(alphabetNumber);
-    print(" list: $alphabetNumbers");
-
-    // print("hiiii$alphabetNumber");
   }
 
   int getAlphabetNumber(String character) {
-    // The list of alphabets
     List<String> alphabets = [
       'a',
       'b',
@@ -271,65 +285,7 @@ class _transsState extends State<transs> {
       'y',
       'z'
     ];
-
-    // Get the index of the character in the alphabets list
     int index = alphabets.indexOf(character.toLowerCase());
-
-    // Return the alphabet number
     return index + 1;
-  }
-}
-
-// import 'dart:async';
-
-Future<dynamic> build_row() async {
-  // Perform an asynchronous operation
-  await Future.delayed(Duration(seconds: 3));
-
-  // Build a widget asynchronously
-  return SingleChildScrollView(
-    scrollDirection: Axis.horizontal,
-    child: Row(
-      children: [
-        for (int i = 1; i <= 26; i++) ...[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              // print()
-              // width: width * 0.8,
-              // height: height * 0.5,
-              child: Image.asset(
-                "assets/$i.png",
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          // Gap(10),
-        ],
-      ],
-    ),
-  );
-}
-
-// In a Flutter widget
-
-class MyWidget extends StatefulWidget {
-  @override
-  _MyWidgetState createState() => _MyWidgetState();
-}
-
-class _MyWidgetState extends State<MyWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: build_row(),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          return snapshot.data;
-        } else {
-          return Gap(10);
-        }
-      },
-    );
   }
 }

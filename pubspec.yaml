@@ -30,4 +30,5 @@ flutter:
 # flutter:
   assets:
     - assets/
+    - gif/
 
