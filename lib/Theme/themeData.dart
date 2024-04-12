@@ -20,5 +20,6 @@ ThemeData darkMode = ThemeData(
     onPrimary: Colors.white,
     primaryContainer: black,
     tertiary: D_bg,
+    onPrimaryContainer: navyBlue,
   ),
 );

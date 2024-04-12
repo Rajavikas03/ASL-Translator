@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:translator_2/Pages/splashScreen.dart';
 import 'package:translator_2/Theme/theme.dart';
-import 'package:translator_2/Pages/trans.dart';
+// import 'package:translator_2/Pages/trans.dart';
 
 void main() {
   runApp(MainApp());
@@ -15,9 +15,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final height = MediaQuery.of(context).size.height;
-    // final width = MediaQuery.of(context).size.width;
-    // final theme = Theme.of(context);
     return ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
       builder: (context, child) => MaterialApp(

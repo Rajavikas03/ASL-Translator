@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
+import 'package:gif_view/gif_view.dart';
 import 'package:provider/provider.dart';
 import 'package:translator/translator.dart';
 import 'package:translator_2/Utils/Methods.dart';
@@ -8,8 +10,10 @@ import '../Gif/GifData.dart';
 import '../Theme/theme.dart';
 
 List<int> alphabetNumbers = [];
+// ignore: non_constant_identifier_names
 String Result = "";
 
+// ignore: camel_case_types
 class transs extends StatefulWidget {
   const transs({super.key});
 
@@ -41,30 +45,117 @@ class _transsState extends State<transs> {
     final double width = MediaQuery.of(context).size.width;
     final theme = Theme.of(context).colorScheme;
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: theme.background,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              DrawerHeader(
+                  child: Column(
+                children: [
+                  Icon(
+                    Icons.translate,
+                    size: 80,
+                    color: Provider.of<ThemeProvider>(context, listen: false)
+                            .isDarkMode
+                        ? theme.primary
+                        : theme.tertiary,
+                  ),
+                  const Text(
+                    "ASL Trans",
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  )
+                ],
+              )),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  tileColor: theme.primaryContainer,
+                  title: Row(
+                    children: [
+                      const Text(
+                        "Theme :",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      Provider.of<ThemeProvider>(context, listen: false)
+                              .isDarkMode
+                          ? const Text(" DarkMode")
+                          : const Text(" LightMode")
+                    ],
+                  ),
+                  trailing: CupertinoSwitch(
+                    activeColor:
+                        Provider.of<ThemeProvider>(context, listen: false)
+                                .isDarkMode
+                            ? theme.primary
+                            : theme.tertiary,
+                    trackColor:
+                        Provider.of<ThemeProvider>(context, listen: false)
+                                .isDarkMode
+                            ? theme.onPrimary
+                            : theme.onPrimary,
+                    thumbColor:
+                        Provider.of<ThemeProvider>(context, listen: false)
+                                .isDarkMode
+                            ? theme.onPrimaryContainer
+                            : theme.background,
+                    value: Provider.of<ThemeProvider>(context, listen: false)
+                        .isDarkMode,
+                    onChanged: (value) =>
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .toggleTheme(),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  // height: height * 0.6,
+                  child: Card(
+                    color: theme.primaryContainer,
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "About",
+                                style: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.w600),
+                              ),
+                              Gap(8),
+                              Icon(
+                                Icons.info_outline,
+                                size: 30,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Text to ASL Generator Tool\nAmerican Sign Language (ASL) is a natural language. It is the primary sign language used by the deaf and people with hearing impairment in the USA and Canada.\nEnglish to Sign Language (ASL) Translator\nEnter English Text\nEnter English Text Here...\nText to ASL Generator Tool\nAmerican Sign Language (ASL) is a natural language. It is the primary sign language used by the deaf and people with hearing impairment in the USA and Canada.\nAmerican Sign Language is one of the most popular sign languages around the world. Although it contains the same alphabets as English, it is not a subset of the English language. Sentence formation or the sequence of words in a sentence is different in ASL as compared to English because of its unique grammar rules. ASL is considered to be a descendant of French Sign Language that is also influenced by Martha's Vineyard Sign Language and some other local sign languages. ASL uses the one-hand fingerspelling method for the English Alphabet.\nThis WeCapable Tool easily converts English text into sign language symbols. This tool will be very useful for both teaching and learning American sign language.\nSign language alphabet\nTranslation of text to sign language is also be given as a task during sign language study session. This tool can easily produce the correct answers and because the visual stays on screen, students can follow the hand movements at their own pace.",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
       backgroundColor: theme.background,
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(
-              Provider.of<ThemeProvider>(context, listen: false).isDarkMode
-                  ? Icons.dark_mode
-                  : Icons.light_mode,
-              color:
-                  Provider.of<ThemeProvider>(context, listen: false).isDarkMode
-                      ? theme.primary
-                      : theme.onPrimary,
-            ),
-            onPressed: () {
-              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-            },
-          ),
-        ],
-        leading: Icon(
-          Icons.translate,
-          color: Provider.of<ThemeProvider>(context, listen: false).isDarkMode
-              ? theme.primary
-              : theme.tertiary,
-        ),
         centerTitle: true,
         title: Text(
           'Translation',
@@ -78,7 +169,7 @@ class _transsState extends State<transs> {
           children: [
             SizedBox(height: height * 0.04),
             SizedBox(
-              height: height * 0.4,
+              height: height * 0.45,
               child: Card(
                 color: theme.primaryContainer,
                 margin: const EdgeInsets.all(12),
@@ -189,7 +280,7 @@ class _transsState extends State<transs> {
                 onPressed: () {
                   // print("Textfield controller: ${textcontroller.text}");
                   translateText(textcontroller.text);
-                  sign_block(textcontroller.text);
+                  signBlock(textcontroller.text);
                 },
                 child: const Padding(
                   padding: EdgeInsets.only(
@@ -223,12 +314,24 @@ class _transsState extends State<transs> {
               ),
             ),
             const Gap(40),
-            SizedBox(
-              height: height * 0.5,
-              width: width * 0.8,
-              child: Result.isNotEmpty
-                  ? Image.asset(Result)
-                  : Column(
+            // SizedBox(
+            // height: height * 0.5,
+            // width: width * 0.8,
+            // child:
+            Result.isNotEmpty
+                ? SizedBox(
+                    height: height * 0.25,
+                    width: width * 0.8,
+                    child: GifView.asset(
+                      Result,
+                      height: 400,
+                      repeat: ImageRepeat.repeat,
+                    ),
+                  )
+                : SizedBox(
+                    height: height * 0.5,
+                    width: width * 0.8,
+                    child: Column(
                       children: [
                         Text(
                           "Gif Not Availabe",
@@ -251,7 +354,9 @@ class _transsState extends State<transs> {
                         ),
                       ],
                     ),
-            ),
+                  ),
+            // ),
+            const Gap(50),
 
             // Text("$errorMessage")
           ],
@@ -262,10 +367,10 @@ class _transsState extends State<transs> {
 
 // Error handler
   void handleError(dynamic error, StackTrace stackTrace) {
-    print('Error: $error');
-    print('Stack trace: $stackTrace');
+    // print('Error: $error');
+    // print('Stack trace: $stackTrace');
     setState(() {
-      var errorMessage = 'An error occurred: $error';
+      // var errorMessage = 'An error occurred: $error';
       const trans = "Translation";
       translated = trans;
     });
@@ -297,7 +402,7 @@ class _transsState extends State<transs> {
   // }
 
 // Sign coverision
-  void sign_block(String text) async {
+  void signBlock(String text) async {
     if (text.isNotEmpty) {
       try {
         // if (Result.isEmpty) {
