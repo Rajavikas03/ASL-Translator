@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:translator_2/Pages/trans.dart';
@@ -73,6 +72,7 @@ class _splash_ScreenState extends State<splash_Screen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: AnimatedBuilder(
           animation: _animation,
@@ -83,7 +83,7 @@ class _splash_ScreenState extends State<splash_Screen>
             );
           },
           child: Image.asset(
-            "assets/TransLogo.png",
+            "assets/splashScreen/TransLogo.png",
             // height: 400,
           ),
         ),

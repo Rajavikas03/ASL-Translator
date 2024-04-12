@@ -32,4 +32,5 @@ flutter:
   assets:
     - assets/
     - gif/
+    - assets/splashScreen/
 
