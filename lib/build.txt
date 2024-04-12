@@ -1,0 +1,68 @@
+flutter build apk --split-per-abi
+
+
+// Translate Text
+  Future<void> translateText(String text) async {
+    try {
+      if (text.isNotEmpty) {
+        print("if");
+
+        // print("translate text: ${translation.text}");
+        setState(() async {
+          // print(" Empty space: ${text.trim().isNotEmpty}");
+          final translation = await text.translate(
+            from: 'auto',
+            to: 'ar',
+          );
+          translated = translation.text;
+        });
+      } else {
+        print("else");
+        translated = "Translation";
+      }
+    } catch (error, stackTrace) {
+      handleError(error, stackTrace);
+    }
+  }
+  // }
+
+// Sign coverision
+  void sign_block(String text) async {
+    if (text.isNotEmpty) {
+      try {
+        alphabetNumbers.clear();
+        final List<String> characters = text.toLowerCase().characters.toList();
+        for (String character in characters) {
+          alphabetNumber = My_services().getAlphabetNumber(character);
+          alphabetNumbers.add(alphabetNumber);
+        }
+        if (text.trim().isNotEmpty) {
+          for (int i = 0; i < gif.length; i++) {
+            print(text);
+
+            if (text == gif[i].GifName) {
+              // print("if statement");
+              setState(() {
+                Result = gif[i].GifImg;
+              });
+              break;
+            } else {
+              Result = "";
+            }
+          }
+        } else {
+          setState(() {
+            Result = "gif/error.png";
+          });
+        }
+      } catch (error, stackTrace) {
+        handleError(error, stackTrace);
+      }
+    } else if (text.trim().isEmpty) {
+      setState(() {
+        Result = "gif/error.png";
+      });
+    } else {
+      alphabetNumbers.clear();
+    }
+  }

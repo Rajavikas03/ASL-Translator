@@ -12,6 +12,7 @@ dependencies:
 
   translator: ^1.0.0
   gap: ^3.0.1
+  provider: ^6.1.2
 
 
 
